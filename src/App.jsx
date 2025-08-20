@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import "./App.css";
+import Body from "./components/Body";
 
 function App() {
   return (
     <div>
-      <div className="text-3xl font-bold underline">Hello Priyanka</div>
+      <Body />
     </div>
   );
 }

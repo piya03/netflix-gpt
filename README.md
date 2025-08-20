@@ -2,6 +2,8 @@
 
 - npm create vite@latest
 - configure tailwind css in our app
+- Created Sign In form
+- Creates Sign up now
 
 # Features
 
