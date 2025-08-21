@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Header from "./Header";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 //util
 import { checkValidateData } from "../utils/validate";
 
@@ -9,8 +13,7 @@ const Login = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
-  console.log("🚀 ~ Login ~ error:", error);
+  const [error, setError] = useState(null);
 
   function toggleSignInForm() {
     setSignIn((prev) => !prev);
@@ -19,8 +22,41 @@ const Login = () => {
   function handleButtonClick() {
     // check validation
     const error = checkValidateData(fullName, email, password);
-    console.log("🚀 ~ handleButtonClick ~ error:", error);
     setError(error);
+    if (error) return; // no need to go ahead
+
+    // create new user sign in /sign up
+    if (!isSignIn) {
+      // signup login
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+
+          // ...
+        })
+        .catch((error) => {
+          console.log("🚀 ~ handleButtonClick ~ error:", error);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorCode + " " + errorMessage);
+          // ..
+        });
+    } else {
+      // sign in logic
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("🚀 sign in :", user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorCode + " " + errorMessage);
+        });
+    }
   }
   return (
     <div className="relative">
@@ -56,7 +92,7 @@ const Login = () => {
         />
 
         <input
-          type="password"
+          // type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
