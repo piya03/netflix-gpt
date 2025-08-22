@@ -11,7 +11,7 @@
 - Install firebase CLI 'npm install -g firebase-tools'
 - firebase login
 - firebase init
-- firebase build
+- firebase build (npm run build)
 - firebase deploy
 - Create Sign up user account
   -firebase documenttation https://firebase.google.com/docs/auth/web/password-auth?hl=en&_gl=1*1q5dnur*_up*MQ..&gclid=Cj0KCQjwh5vFBhCyARIsAHBx2wz9fqjWJRvsQwE5bTzGtsv05aI7yTLE_w0k2SgKkP4CuO7GKju0YBQaAp0PEALw_wcB&gclsrc=aw.ds&gbraid=0AAAAADpUDOjE3ANM0q8V4aOKYzEAezFUO
@@ -23,6 +23,8 @@
   - Sign out
   - auth
   - navigation
+  - bugfix of signup user displayName and profile update
+  - Bugfix - if the user is not login redirect to login page/ - if login redirect to browse page
 
 # Features
 

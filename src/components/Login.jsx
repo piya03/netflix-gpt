@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
 
 // component
 import Header from "./Header";
@@ -21,13 +20,12 @@ import { addUser } from "../utils/userSlice";
  * login and signup form with firebase api authentication
  */
 const Login = () => {
-  const [isSignIn, setSignIn] = useState(false);
+  const [isSignIn, setSignIn] = useState(true);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   function toggleSignInForm() {
@@ -54,9 +52,7 @@ const Login = () => {
             .then(() => {
               // Profile updated!
               const { uid, email, displayName, photoURL } = auth.currentUser;
-
               dispatch(addUser({ uid, email, displayName, photoURL }));
-              navigate("./browse");
             })
             .catch((error) => {
               // An error occurred
@@ -76,7 +72,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
-          navigate("./browse");
           // ...
         })
         .catch((error) => {
