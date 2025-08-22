@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+
 // component
 import Header from "./Header";
 
@@ -14,8 +15,11 @@ import {
 // utils reducers
 import { auth } from "../utils/firebase";
 import { checkValidateData } from "../utils/validate";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser } from "../utils/userSlice";
 
+/**
+ * login and signup form with firebase api authentication
+ */
 const Login = () => {
   const [isSignIn, setSignIn] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -62,7 +66,6 @@ const Login = () => {
           // ...
         })
         .catch((error) => {
-          console.log("🚀 ~ handleButtonClick ~ error:", error);
           const errorCode = error.code;
           const errorMessage = error.message;
           setError(errorCode + " " + errorMessage);
@@ -73,7 +76,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
-          const user = userCredential.user;
           navigate("./browse");
           // ...
         })

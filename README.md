@@ -21,6 +21,8 @@
   - Implement sign in/ sign up user api
   - created Redux store with userSlice
   - Sign out
+  - auth
+  - navigation
 
 # Features
 

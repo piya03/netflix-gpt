@@ -2,7 +2,6 @@ export const checkValidateData = (fullName, email, password, isSignIn) => {
 
 
   const isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.trim())
-  console.log("🚀 ~ checkValidateData ~ isEmailValid:", isEmailValid)
   const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/.test(password);
   if (!isSignIn && fullName.trim().length <= 3) {
     return "Enter Full Name"

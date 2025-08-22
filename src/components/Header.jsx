@@ -1,14 +1,18 @@
 import React from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+
+// firebase
+import { signOut } from "firebase/auth";
+
+// utils
+import { auth } from "../utils/firebase";
 
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-  console.log("🚀 ~ Header ~ user:", user);
 
+  // logout logic using firebase api
   function handleSignOut() {
     signOut(auth)
       .then(() => {
