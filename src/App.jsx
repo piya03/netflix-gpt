@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 import Body from "./components/Body";
+import { store } from "./utils/appStore";
+import { Provider } from "react-redux";
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <Body />
-    </div>
+    </Provider>
   );
 }
 

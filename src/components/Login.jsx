@@ -1,12 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+// component
 import Header from "./Header";
+
+// firebase
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+
+// utils reducers
 import { auth } from "../utils/firebase";
-//util
 import { checkValidateData } from "../utils/validate";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignIn, setSignIn] = useState(false);
@@ -15,13 +23,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   function toggleSignInForm() {
     setSignIn((prev) => !prev);
   }
 
   function handleButtonClick() {
     // check validation
-    const error = checkValidateData(fullName, email, password);
+    const error = checkValidateData(fullName, email, password, isSignIn);
     setError(error);
     if (error) return; // no need to go ahead
 
@@ -32,6 +43,21 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
+          updateProfile(user, {
+            displayName: fullName,
+            photoURL: "https://avatars.githubusercontent.com/u/28654779?v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+
+              dispatch(addUser({ uid, email, displayName, photoURL }));
+              navigate("./browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              setError(error.message);
+            });
 
           // ...
         })
@@ -48,7 +74,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("🚀 sign in :", user);
+          navigate("./browse");
           // ...
         })
         .catch((error) => {
@@ -59,7 +85,7 @@ const Login = () => {
     }
   }
   return (
-    <div className="relative">
+    <div className="relative ">
       <img
         className="absolute"
         src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_large.jpg"
@@ -69,7 +95,7 @@ const Login = () => {
         onClick={(e) => {
           e.preventDefault();
         }}
-        className="absolute right-0 left-0 top-10 flex items-center px-20 flex-col bg-black mx-auto max-w-lg text-white py-20 rounded opacity-80"
+        className="absolute right-0 left-0 top-28 flex items-center px-20 flex-col bg-black mx-auto max-w-lg text-white py-20 rounded"
       >
         <h1 className="font-bold text-3xl py-4">
           {isSignIn ? "Sign In" : "Sign Up"}
