@@ -25,6 +25,13 @@
   - navigation
   - bugfix of signup user displayName and profile update
   - Bugfix - if the user is not login redirect to login page/ - if login redirect to browse page
+  - unsubscribe to the onAuthStateChanged callback
+  - register for TMDB api and create an app and get access token
+  - Get Data from TMDB now playing movies list api
+  - Custom Hook
+  - Planning for MainContainer and secondaryContainer
+  - Update the store with TrailerVideo
+  - Added Iframe
 
 # Features
 

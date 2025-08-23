@@ -16,6 +16,8 @@ import { auth } from "../utils/firebase";
 import { checkValidateData } from "../utils/validate";
 import { addUser } from "../utils/userSlice";
 
+// constants
+import { bgImg, photoUrl } from "../constants";
 /**
  * login and signup form with firebase api authentication
  */
@@ -47,7 +49,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: fullName,
-            photoURL: "https://avatars.githubusercontent.com/u/28654779?v=4",
+            photoURL: photoUrl,
           })
             .then(() => {
               // Profile updated!
@@ -83,10 +85,7 @@ const Login = () => {
   }
   return (
     <div className="relative ">
-      <img
-        className="absolute"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_large.jpg"
-      />
+      <img className="absolute" alt="bgImg" src={bgImg} />
       <Header />
       <form
         onClick={(e) => {

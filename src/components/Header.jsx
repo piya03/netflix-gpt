@@ -10,8 +10,10 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 
 // utils
-
 import { addUser, removeUser } from "../utils/userSlice";
+
+//constants
+import { netFlixLogo } from "../constants";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,7 +34,8 @@ const Header = () => {
 
   //Get the currently signed-in user on mount
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("🚀 ~ Header ~ user:", user);
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -45,15 +48,16 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    // unsubscribe whenever component is unmount
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
-    <div className="flex justify-between absolute w-full px-8 py-2 bg-gradient-to-b from-black ">
-      <img
-        className="w-44"
-        alt="logo"
-        src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-07-24/consent/87b6a5c0-0104-4e96-a291-092c11350111/019808e2-d1e7-7c0f-ad43-c485b7d9a221/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-      />
+    <div className="flex justify-between absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10">
+      <img className="w-44" alt="logo" src={netFlixLogo} />
 
       {user && (
         <div className="flex p-2 cursor-pointer">
